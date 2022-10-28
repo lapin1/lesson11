@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -86,6 +87,9 @@ class Task11TestSuit02 {
         driver.findElement(By.id("phone_mobile")).click();
         driver.findElement(By.id("phone_mobile")).sendKeys("44800900902");
         driver.findElement(By.cssSelector("#submitAccount > span")).click();
+        
+        WebElement element = driver.findElement(By.cssSelector("#submitAccount > span"));
+        Assertions.assertTrue(isClicked(element));
     }
 
     @Test
@@ -118,7 +122,23 @@ class Task11TestSuit02 {
         driver.findElement(By.cssSelector(".standard-checkout > span")).click();
         driver.findElement(By.linkText("Pay by bank wire (order processing will be longer)")).click();
         driver.findElement(By.cssSelector("#cart_navigation span")).click();
+        
+        WebElement element = driver.findElement(By.cssSelector("#cart_navigation span"));
+        Assertions.assertTrue(isClicked(element));
     }
+    
+    public boolean isClicked(WebElement element){
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            element.click();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+    
+    
 
 }
 
