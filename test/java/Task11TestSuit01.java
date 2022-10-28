@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -64,6 +65,9 @@ class ChromeCreateTest {
         driver.findElement(By.name("c_password")).click();
         driver.findElement(By.name("c_password")).sendKeys("superPassword11");
         driver.findElement(By.cssSelector("fieldset:nth-child(13) > input")).click();
+        
+        WebElement element = driver.findElement(By.cssSelector("fieldset:nth-child(13) > input"));
+        Assertions.assertTrue(isClicked(element));
     }
 
     @Test
@@ -89,6 +93,20 @@ class ChromeCreateTest {
         driver.findElement(By.name("c_password")).click();
         driver.findElement(By.name("c_password")).sendKeys("superPassword11");
         driver.findElement(By.cssSelector("fieldset:nth-child(13) > input")).click();
+        
+        WebElement element = driver.findElement(By.cssSelector("fieldset:nth-child(13) > input"));
+        Assertions.assertTrue(isClicked(element));
+    }
+    
+    public boolean isClicked(WebElement element){
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            element.click();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
 }
